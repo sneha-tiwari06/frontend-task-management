@@ -1,7 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+    const role = localStorage.getItem("role"); // Get role from localStorage
+    console.log("User Role from LocalStorage:", role);
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
@@ -9,10 +12,12 @@ const Navbar = () => {
                 <div className="navbar-nav">
                     <Link className="nav-link" to="/task-form">Add Task</Link>
                     <Link className="nav-link" to="/register">Register</Link>
+                    {role === "admin" && <Link className="nav-link" to="/users">Manage Users</Link>}
                     <Link className="nav-link" to="/">Logout</Link>
                 </div>
             </div>
         </nav>
     );
 };
+
 export default Navbar;
