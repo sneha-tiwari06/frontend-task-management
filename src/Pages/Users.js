@@ -5,6 +5,7 @@ import { axiosInstance } from "../utils/axiosInstance";
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
+  const [editedName, setEditedName] = useState("");
   const [editedEmail, setEditedEmail] = useState("");
   const [editedRole, setEditedRole] = useState("");
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ const UserList = () => {
   // Handle Edit User
   const handleEdit = (user) => {
     setEditingUser(user);
+    setEditedName(user.name);
     setEditedEmail(user.email);
     setEditedRole(user.role);
   };
@@ -56,7 +58,7 @@ const UserList = () => {
     try {
       const res = await axiosInstance.put(
         `/users/${editingUser._id}`,
-        { email: editedEmail, role: editedRole },
+        { name: editedName, email: editedEmail, role: editedRole },
         {
           headers: { Authorization: localStorage.getItem("token") },
         }
@@ -107,6 +109,15 @@ const UserList = () => {
               <div className="modal-header">
                 <h5 className="modal-title">Edit User</h5>
                 <button type="button" className="btn-close" onClick={() => setEditingUser(null)}></button>
+              </div>
+              <div className="modal-body">
+                <label>Name:</label>
+                <input
+                  type="name"
+                  className="form-control"
+                  value={editedName}
+                  onChange={(e) => setEditedName(e.target.value)}
+                />             
               </div>
               <div className="modal-body">
                 <label>Email:</label>
